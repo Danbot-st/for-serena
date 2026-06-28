@@ -77,6 +77,14 @@ export default function App() {
     content:
       "Here are some selfies just for you hehe 🤍 If you miss my face, you can flip through these whenever you want. I'll keep adding more later too :)",
   },
+  {
+  id: 6,
+  title: "When you can't sleep",
+  icon: '/stickers/capsule-6-moon.png',
+  image: '',
+  audio: '/goodnight.qta',
+  content: '',
+},
 ];
 
   const dateOptions = {
@@ -686,13 +694,19 @@ backgroundRepeat: 'no-repeat',
                 flexWrap: 'wrap',
               }}
             >
-              <div style={{ flex: '1 1 420px', minWidth: '280px' }}>
+              <div
+                style={{
+                  flex: activeCapsule.audio ? '1 1 100%' : '1 1 420px',
+                  minWidth: '280px',
+                  textAlign: activeCapsule.audio ? 'center' : 'initial',
+                }}
+              >
                 <h2
                   style={{
                     color: '#E87CB0',
                     fontSize: '38px',
                     lineHeight: '1.25',
-                    margin: '0 0 24px 0',
+                    margin: '-24px 0 24px 0',
                     fontFamily: "'DynaPuff', cursive",
                     fontWeight: '600',
                     textAlign: 'center',
@@ -701,31 +715,78 @@ backgroundRepeat: 'no-repeat',
                   {activeCapsule.title}
                 </h2>
 
-                <div
-                  style={{
-                    backgroundColor: '#FCEFF6',
-                    padding: '28px 30px',
-                    borderRadius: '24px',
-                    border: '3px dashed #F4B8D5',
-                    textAlign: 'left',
-                    marginBottom: '28px',
-                  }}
-                >
-                  <p
+                {activeCapsule.content && activeCapsule.content.trim() !== '' && (
+                  <div
                     style={{
-                      fontSize: '16px',
-                      color: '#565656',
-                      lineHeight: '1.95',
-                      whiteSpace: 'pre-line',
-                      margin: 0,
+                      backgroundColor: '#FCEFF6',
+                      padding: '28px 30px',
+                      borderRadius: '24px',
+                      border: '3px dashed #F4B8D5',
                       textAlign: 'left',
-                      fontFamily: "'Fredoka', sans-serif",
-                      fontWeight: '500',
+                      marginBottom: '28px',
                     }}
                   >
-                    {activeCapsule.content}
-                  </p>
-                </div>
+                    <p
+                      style={{
+                        fontSize: '16px',
+                        color: '#565656',
+                        lineHeight: '1.95',
+                        whiteSpace: 'pre-line',
+                        margin: 0,
+                        textAlign: 'left',
+                        fontFamily: "'Fredoka', sans-serif",
+                        fontWeight: '500',
+                      }}
+                    >
+                      {activeCapsule.content}
+                    </p>
+                  </div>
+                )}
+
+                {activeCapsule.audio && (
+                  <div
+                    style={{
+                      backgroundColor: '#FFF0F7',
+                      border: '3px dashed #F4B8D5',
+                      borderRadius: '24px',
+                      padding: '26px 28px',
+                      margin: '0 auto 28px auto',
+                      textAlign: 'center',
+                      width: '100%',
+                      maxWidth: '620px',
+                      boxSizing: 'border-box',
+                    }}
+                  >
+                    <div
+                      style={{
+                        color: '#E87CB0',
+                        fontSize: '24px',
+                        fontWeight: '700',
+                        fontFamily: "'DynaPuff', cursive",
+                        marginBottom: '16px',
+                      }}
+                    >
+                      🌙 Good Night Voice Message
+                    </div>
+
+                    <audio controls style={{ width: '100%' }}>
+                      <source src={activeCapsule.audio} />
+                      Your browser does not support the audio element.
+                    </audio>
+
+                    <div
+                      style={{
+                        marginTop: '14px',
+                        color: '#E87CB0',
+                        fontSize: '15px',
+                        fontWeight: '700',
+                        fontFamily: "'Fredoka', sans-serif",
+                      }}
+                    >
+                      Sweet dreams, Rena 🤍
+                    </div>
+                  </div>
+                )}
 
                 <div style={{ textAlign: 'center' }}>
                   <button
@@ -748,15 +809,16 @@ backgroundRepeat: 'no-repeat',
                 </div>
               </div>
 
-              <div
-                style={{
-                  flex: activeCapsule.id === 5 ? '0 1 430px' : '0 1 340px',
-                  width: '100%',
-                  maxWidth: activeCapsule.id === 5 ? '430px' : '340px',
-                  margin: '0 auto',
-                  textAlign: 'center',
-                }}
-              >
+              {!activeCapsule.audio && (
+                <div
+                  style={{
+                    flex: activeCapsule.id === 5 ? '0 1 430px' : '0 1 340px',
+                    width: '100%',
+                    maxWidth: activeCapsule.id === 5 ? '430px' : '340px',
+                    margin: '0 auto',
+                    textAlign: 'center',
+                  }}
+                >
                 {activeCapsule.gallery ? (
                   <div
                     style={{
@@ -963,7 +1025,8 @@ backgroundRepeat: 'no-repeat',
                     />
                   </div>
                 )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -1120,6 +1183,7 @@ backgroundRepeat: 'no-repeat',
     marginBottom: '14px',
   }}
 >
+  {capsule.icon && (
   <img
     src={capsule.icon}
     alt=""
@@ -1131,6 +1195,7 @@ backgroundRepeat: 'no-repeat',
       filter: 'drop-shadow(0 6px 8px rgba(232,124,176,0.2))',
     }}
   />
+)}
 </div>
 
               <h2
